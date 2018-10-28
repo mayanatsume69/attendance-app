@@ -1,0 +1,120 @@
+<!--
+
+Web frontend for petsapp
+
+COGS121 by Philip Guo
+https://github.com/pgbovine/COGS121
+
+Start ../server.js and then visit this URL to view this webpage:
+
+http://localhost:3000/petsapp.html
+
+-->
+
+<html>
+<head>
+<title>GameApp</title>
+
+<script src="jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+// jQuery convention for running when the document has been fully loaded:
+$(document).ready(() => {
+  $('#readButton').click(() => {
+    const requestURL = 'users/' + $('#lastNameBox').val();
+    console.log('making ajax request to:', requestURL);
+
+    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+    // Using the core $.ajax() method since it's the most flexible.
+    // ($.get() and $.getJSON() are nicer convenience functions)
+    $.ajax({
+      // all URLs are relative to http://localhost:3000/
+      url: requestURL,
+      type: 'GET',
+      dataType : 'json', // this URL returns data in JSON format
+      success: (data) => {
+        console.log('You received some data!', data);
+
+        if (data.job && data.picture) {
+          $('#status').html('Successfully fetched data at URL: ' + requestURL);
+          $('#jobDiv').html('My job is ' + data.job);
+          $('#pictureDiv').attr('src', data.picture).attr('width', '300px');
+        } else {
+          $('#status').html('Error: could not find user at URL: ' + requestURL);
+          // clear the display
+          $('#jobDiv').html('');
+          $('#pictureDiv').attr('src', '').attr('width', '0px');
+        }
+      },
+    });
+  });
+
+  $('#allUsersButton').click(() => {
+    $.ajax({
+      url: 'users',
+      type: 'GET',
+      dataType : 'json',
+      success: (data) => {
+        console.log('You received some data!', data);
+        $('#status').html('All users: ' + data);
+      },
+    });
+  });
+
+  $('#insertButton').click(() => {
+    $.ajax({
+      // all URLs are relative to http://localhost:3000/
+      url: 'users',
+      type: 'POST', // <-- this is POST, not GET
+      data: {
+          emp_num: $('#insertEmpNumBox').val(),
+          last_name: $('#insertLastNameBox').val(),
+          first_name: $('#insertFirstNameBox').val(),
+          job: $('#insertJobBox').val(),
+          status: $('#insertStatusBox').val(),
+          picture: $('#insertPictureBox').val()
+            },
+      success: (data) => {
+        $('#status').html(data.message);
+      }
+    });
+  });
+
+  // define a generic Ajax error handler:
+  // http://api.jquery.com/ajaxerror/
+  $(document).ajaxError(() => {
+    $('#status').html('Error: unknown ajaxError!');
+  });
+});
+</script>
+
+</head>
+<body>
+  <h1>Welcome to Danganronpa!</h1>
+
+  Employee #: <input id="empNumBox" type="text" size="5"/>
+  Last Name: <input id="lastNameBox" type="text" size="20"/>
+  First Name: <input id="firstNameBox" type="text" size="20"/>
+  Job: <input id="jobBox" type="text" size="10"/>
+  Status: <input id="statusBox" type="text" size="5"/>
+  Picture: <input id="pictureBox" type="text" size="15"/>
+  <button id="readButton">Get profile</button>
+  <button id="allUsersButton">Get all usernames</button>
+
+  <div id="jobDiv"></div>
+  <img id="pictureDiv"></img>
+
+  <hr/>
+  Employee #: <input id="insertEmpNumBox" type="text" size="5"/>
+  Last Name: <input id="insertLastNameBox" type="text" size="20"/>
+  First Name: <input id="insertFirstNameBox" type="text" size="20"/>
+  Job: <input id="insertJobBox" type="text" size="10"/>
+  Status: <input id="insertStatusBox" type="text" size="5"/>
+  Picture: <input id="insertPictureBox" type="text" size="15"/>
+  <button id="insertButton">Insert into database</button>
+
+  <hr/>
+  <div id="status"></div>
+</body>
+</html>
