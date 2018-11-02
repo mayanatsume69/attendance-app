@@ -10,6 +10,6 @@ TO VIEW DANGANRONPA
 TO VIEW ATTENDANCE_TRACK
 
 1. DELETE attendance-app-master
-2. go to attendance track via cmd
+2. go to Attendance_track via cmd
 3. type npm install there
 4. type npm start
