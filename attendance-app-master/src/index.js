@@ -1,52 +1,31 @@
-// React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory, IndexRedirect } from 'react-router';
-
-// Redux
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk'
-
-// Reducer
-import reducer from './reducer';
-
-// Components
-import App from './components/App';
-import Home from './components/Home';
-import RecentEntries from './components/RecentEntries';
-import Data from './components/Data';
-import Students from './components/Students';
-import StudentDetails from './components/StudentDetails';
-import RollCall from './components/RollCall';
-
 import './index.css';
-import './react-vis.css';
+import App from './App';
+import {createStore, applyMiddleware, compose} from 'redux';
+import rootReducer from './store/reducers/rootReducer'
+import {Provider} from 'react-redux'
+import * as serviceWorker from './serviceWorker';
+import thunk from 'redux-thunk';
+import {reduxFirestore, getFirestore} from 'redux-firestore'
+import {reactReduxFirebase, getFirebase} from 'react-redux-firebase'
+import fbConfig from './config/fbConfig'
 
-const store = createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  ),
+const store = createStore(rootReducer, 
+    compose(
+        applyMiddleware(thunk.withExtraArgument({
+        getFirebase, getFirestore
+        })),
+        reduxFirestore(fbConfig),
+        reactReduxFirebase(fbConfig, {attachAuthIsReady: true}
+        )
+    )
 );
 
-const route = (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path='/' component={App}>
-        <IndexRedirect to='home' />
-        <Route path='home' component={Home} />
-        <Route path='recent' component={RecentEntries} />
-        <Route path='data' component={Data} />
-        <Route path='rollcall' component={RollCall}/>
-        <Route path='students' component={Students}></Route>
-        <Route path=':id' component={StudentDetails}/>
-      </Route>
-    </Router>
-  </Provider>
-)
-ReactDOM.render(
-  route,
-  document.getElementById('root')
-);
+store.firebaseAuthIsReady.then(() => {
+    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+    // If you want your app to work offline and load faster, you can change
+    // unregister() to register() below. Note this comes with some pitfalls.
+    // Learn more about service workers: http://bit.ly/CRA-PWA
+    serviceWorker.unregister();
+})

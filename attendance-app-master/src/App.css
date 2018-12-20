@@ -1,123 +1,32 @@
 .App {
-  /*text-align: center;*/
-  font-family: 'Open Sans', sans-serif;
-
+  text-align: center;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 40vmin;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.App-link {
+  color: #61dafb;
 }
-.btn {
-  border-radius: 0;
-}
-.btn-primary {
-  background-color: #55afaa;
-  border-color: #55afaa;
-  transition: 0.2s;
-}
-.btn-primary:hover {
-  background-color: #424040;
-  border-color: #424040;
-  transition: 0.2s;
-}
-Link {
-  float: left;
-  height: 50px;
-  padding: 15px 15px;
-  font-size: 18px;
-  line-height: 20px;
-}
+
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.Students-table {
-  margin-top: 30px;
-  transition: font-size 1s ease-out;
-}
-
-.Table-lastname {
-  background-color: #55afaa;
-  color: #fff;
-}
-
-th {
-  transition: 0.2s;
-}
-th:hover {
-  cursor: pointer;
-  background-color: #424040;
-  transition: 0.2s;
-}
-.modal-backdrop.in {
-  opacity: 0.2;
-}
-.modal-header {
-  font-size: 20px;
-}
-
-.loading-state {
-  padding:100px;
-  padding-left: 200px;
-}
-
-.fa-spinner {
-  color: #00B1A9;
-  font-size: 100px;
-}
-
-.form-control {
-  border-radius: 0;
-}
-.form-inline .form-control {
-  margin-right: 4px;
-}
-.table-button {
-  float: right;
-  height: 30px;
-}
-
-/* Student Details*/
-.student-details h4 {
-  font-weight: bold;
-  color: cadetblue;
-}
-
-/* Roll Call */
-.line-through {
-  text-decoration: line-through;
-  color: cadetblue;
-  font-size: 18px;
-  line-height: 1.5em;
-  position: relative;
-}
-.line-through:hover {
-  cursor: pointer;
-}
-.line-through:after {
-  border-bottom: 0.2em solid cadetblue;
-  content: "";
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 50%;
-}
-.absent {
-  text-decoration: none;
-  font-size: 18px;
-  cursor: pointer;
-  line-height: 1.5em;
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
