@@ -1,3 +1,7 @@
+Prerequisite to view projects in this repo:
+1. Install Node.js
+2. 
+
 TO VIEW DANGANRONPA 
 
 1. DELETE attendance-app-master
@@ -9,6 +13,6 @@ TO VIEW DANGANRONPA
 
 TO VIEW ATTENDANCE_APP
 
-1. go to attendance-app-master via cmd
-2. type npm install there
-3. type npm start
+1. go to folder path attendance-app-master/attendance-app-master via cmd
+2. type 'npm i' there
+3. type 'npm start' 
